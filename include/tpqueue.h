@@ -2,6 +2,9 @@
 #ifndef INCLUDE_TPQUEUE_H_
 #define INCLUDE_TPQUEUE_H_
 
+#include <iostream>
+#include <string>
+
 struct SYM {
   char ch;
   int prior;
