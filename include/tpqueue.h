@@ -2,15 +2,12 @@
 #ifndef INCLUDE_TPQUEUE_H_
 #define INCLUDE_TPQUEUE_H_
 
-#include <iostream>
-#include <string>
-
 struct SYM {
   char ch;
   int prior;
 };
 
-template <typename T, int size>
+template <typename T>
 class TPQueue {
  private:
   struct NODE {
@@ -24,17 +21,16 @@ class TPQueue {
  public:
   TPQueue();
   void push(T);
-  bool isFull();
   bool isEmpty();
   T pop();
   ~TPQueue();
 };
 
-template <typename T, int size>
-TPQueue<T, size>::TPQueue():head(nullptr), members(0){}
+template <typename T>
+TPQueue<T>::TPQueue():head(nullptr), members(0) {}
 
-template <typename T, int size>
-typename TPQueue<T, size>::NODE* TPQueue<T, size>::create(T value) {
+template <typename T>
+typename TPQueue<T>::NODE* TPQueue<T>::create(T value) {
   NODE* temp = new NODE;
   temp->data.ch = value.ch;
   temp->data.prior = value.prior;
@@ -42,22 +38,15 @@ typename TPQueue<T, size>::NODE* TPQueue<T, size>::create(T value) {
   return temp;
 }
 
-template <typename T, int size>
-bool TPQueue<T, size>::isEmpty() {
+template <typename T>
+bool TPQueue<T>::isEmpty() {
   return head == nullptr;
 }
 
-template <typename T, int size>
-bool TPQueue<T, size>::isFull() {
-  return members == size;
-}
-
-template <typename T, int size>
-void TPQueue<T, size>::push(T item) {
+template <typename T>
+void TPQueue<T>::push(T item) {
   bool flag = true;
-  if (isFull())
-    throw std::string("Full!");
-  else if (isEmpty()) {
+  if (isEmpty()) {
     head = create(item);
     members++;
   } else {
@@ -70,7 +59,8 @@ void TPQueue<T, size>::push(T item) {
       flag = false;
     } else if (flag) {
       while (temp->next && flag) {
-        if (temp->data.prior >= item.prior && temp->next->data.prior < item.prior) {
+        if (temp->data.prior >= item.prior &&
+            temp->next->data.prior < item.prior) {
           NODE* copy = create(item);
           copy->next = temp->next;
           temp->next = copy;
@@ -87,8 +77,8 @@ void TPQueue<T, size>::push(T item) {
   }
 }
 
-template <typename T, int size>
-T TPQueue<T, size>::pop() {
+template <typename T>
+T TPQueue<T>::pop() {
     if (isEmpty()) throw std::string("Empty");
     NODE* temp = head->next;
     T copy = head->data;
@@ -98,8 +88,8 @@ T TPQueue<T, size>::pop() {
     return copy;
 }
 
-template <typename T, int size>
-TPQueue<T, size>::~TPQueue() {
+template <typename T>
+TPQueue<T>::~TPQueue() {
     if (isEmpty()) throw std::string("Empty");
     while (head) {
     NODE* temp = head->next;
