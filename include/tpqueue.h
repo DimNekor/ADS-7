@@ -93,7 +93,6 @@ T TPQueue<T>::pop() {
 
 template <typename T>
 TPQueue<T>::~TPQueue() {
-    if (isEmpty()) throw std::string("Empty");
     while (head) {
     NODE* temp = head->next;
     delete head;
